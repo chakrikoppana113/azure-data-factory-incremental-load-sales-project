@@ -1,0 +1,16 @@
+{
+	"name": "ds_onprem_mysql_sourse_copy",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_onprem_mysql",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "MySqlTable",
+		"schema": [],
+		"typeProperties": {
+			"tableName": "`dim_product`"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

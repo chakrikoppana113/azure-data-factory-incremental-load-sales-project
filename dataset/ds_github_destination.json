@@ -1,0 +1,25 @@
+{
+	"name": "ds_github_destination",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_DL",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "employee.csv",
+				"folderPath": "raw_data",
+				"fileSystem": "destination"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,45 @@
+{
+	"name": "ds_dl_1from_multi_destination",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_DL",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"p_file_dest": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().p_file_dest",
+					"type": "Expression"
+				},
+				"fileSystem": "destination"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "department_id",
+				"type": "String"
+			},
+			{
+				"name": "department_name",
+				"type": "String"
+			},
+			{
+				"name": "location",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,24 @@
+{
+	"name": "LS_azure_sql_db_akv",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"server": "chakri-server.database.windows.net",
+			"database": "chakri_sql_data_base",
+			"encrypt": "mandatory",
+			"trustServerCertificate": false,
+			"authenticationType": "SQL",
+			"userName": "Chakriade",
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "LS_akv",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "kvsecretkeyforsqlpass"
+			}
+		}
+	}
+}

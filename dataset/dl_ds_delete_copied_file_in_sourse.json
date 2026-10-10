@@ -1,0 +1,19 @@
+{
+	"name": "dl_ds_delete_copied_file_in_sourse",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_DL",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "raw_data",
+				"fileSystem": "sourse"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

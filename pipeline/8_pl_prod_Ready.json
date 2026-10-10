@@ -1,0 +1,72 @@
+{
+	"name": "8_pl_prod_Ready",
+	"properties": {
+		"activities": [
+			{
+				"name": "copy",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "1_dl_copy_csv",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "copygithub",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "copy",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "2_github_copy_csv",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "multifile_copy",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "copygithub",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "3_multifile_copy_csv",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2026-10-05T06:17:51Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

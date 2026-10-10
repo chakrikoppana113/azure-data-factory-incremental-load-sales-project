@@ -1,0 +1,39 @@
+{
+	"name": "ds_azure_db_destination_staging_orders",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_azure_sql_database",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "order_id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "customer_id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "amount",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 2
+			},
+			{
+				"name": "inserted_date",
+				"type": "datetime2",
+				"scale": 7
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "orders_staging"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

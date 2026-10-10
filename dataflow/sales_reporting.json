@@ -1,0 +1,84 @@
+{
+	"name": "sales_reporting",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_df_reporting_sourse",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_dl_report_sales_destination",
+						"type": "DatasetReference"
+					},
+					"name": "salesreportdestination"
+				}
+			],
+			"transformations": [
+				{
+					"name": "selectrequiredforreport"
+				},
+				{
+					"name": "splitcountrywise"
+				},
+				{
+					"name": "totalsales"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          InvoiceNo as integer,",
+				"          StockCode as string,",
+				"          Description as string,",
+				"          Quantity as integer,",
+				"          InvoiceDate as date,",
+				"          UnitPrice as double,",
+				"          CustomerID as string,",
+				"          Country as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     partitionBy('hash', 1)) ~> source1",
+				"source1 select(mapColumn(",
+				"          InvoiceNo,",
+				"          Quantity,",
+				"          UnitPrice,",
+				"          Country",
+				"     ),",
+				"     partitionBy('hash', 1),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectrequiredforreport",
+				"selectrequiredforreport split(Country== \"United Kingdom\",",
+				"     Country== \"     Australia\",",
+				"     disjoint: false) ~> splitcountrywise@(UK, AUS)",
+				"splitcountrywise@UK aggregate(groupBy(InvoiceNo),",
+				"     UnitPrice = round(sum(toDouble(UnitPrice)*Quantity),2)) ~> totalsales",
+				"totalsales sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          InvoiceNo as string,",
+				"          StockCode as string,",
+				"          Description as string,",
+				"          Quantity as string,",
+				"          InvoiceDate as string,",
+				"          UnitPrice as string,",
+				"          CustomerID as string,",
+				"          Country as string",
+				"     ),",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> salesreportdestination"
+			]
+		}
+	}
+}

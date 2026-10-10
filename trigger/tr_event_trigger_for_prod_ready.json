@@ -1,0 +1,24 @@
+{
+	"name": "tr_event_trigger_for_prod_ready",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "8_pl_prod_Ready",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/sourse/blobs/employees.csv",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/db4ab155-dbe6-4aa1-a7e8-9281c7c64375/resourceGroups/azure_data_engineering_practice/providers/Microsoft.Storage/storageAccounts/b7adlstg",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}

@@ -1,0 +1,17 @@
+{
+	"name": "ds_azure_db_lookup",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_azure_sql_database",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "orders"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

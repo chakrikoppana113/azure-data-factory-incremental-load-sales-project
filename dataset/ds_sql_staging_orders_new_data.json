@@ -1,0 +1,53 @@
+{
+	"name": "ds_sql_staging_orders_new_data",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_azure_sql_database",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "order_id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "customer_id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "product_id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "quantity",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "amount",
+				"type": "decimal",
+				"precision": 12,
+				"scale": 2
+			},
+			{
+				"name": "order_date",
+				"type": "date"
+			},
+			{
+				"name": "inserted_date",
+				"type": "datetime2",
+				"scale": 0
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "orders_staging"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

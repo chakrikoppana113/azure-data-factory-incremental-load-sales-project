@@ -1,0 +1,59 @@
+{
+	"name": "df_customer_csv",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_dl_datatransform_csv",
+						"type": "DatasetReference"
+					},
+					"name": "soursetxtfile"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_dl_datatransform_destination_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sinkTOdatalakedestination"
+				}
+			],
+			"transformations": [
+				{
+					"name": "pivot1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          CustID as string,",
+				"          Product as string,",
+				"          Sales as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     partitionBy('hash', 1)) ~> soursetxtfile",
+				"soursetxtfile pivot(groupBy(CustID),",
+				"     pivotBy(Product),",
+				"     total_sales_ = sum(toInteger(Sales)),",
+				"     columnNaming: '$N$V',",
+				"     lateral: true) ~> pivot1",
+				"pivot1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          CustID as string,",
+				"          Product as string,",
+				"          Sales as string",
+				"     ),",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sinkTOdatalakedestination"
+			]
+		}
+	}
+}

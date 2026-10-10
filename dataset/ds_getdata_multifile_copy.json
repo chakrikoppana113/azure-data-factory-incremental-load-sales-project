@@ -1,0 +1,37 @@
+{
+	"name": "ds_getdata_multifile_copy",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_DL",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "raw_data",
+				"fileSystem": "sourse"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "department_id",
+				"type": "String"
+			},
+			{
+				"name": "department_name",
+				"type": "String"
+			},
+			{
+				"name": "location",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
